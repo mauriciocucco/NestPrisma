@@ -20,9 +20,9 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { FilteredUser } from './entities/user.entity';
-import { ConnectionArgsDto } from '../../paginated/dto/connections-args.dto';
-import { ApiPageResponse } from 'src/paginated/decorators/api-page-response.decorator';
-import { PageDto } from 'src/paginated/dto/page.dto';
+import { ConnectionArgsDto } from '../../pagination/dto/connections-args.dto';
+import { ApiPageResponse } from 'src/pagination/decorators/api-page-response.decorator';
+import { PageDto } from 'src/pagination/dto/page.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @Controller('users')

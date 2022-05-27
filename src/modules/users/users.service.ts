@@ -5,7 +5,7 @@ import { PrismaService } from '../prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserEntity } from './entities/user.entity';
-import { ConnectionArgsDto } from '../../paginated/dto/connections-args.dto';
+import { ConnectionArgsDto } from '../../pagination/dto/connections-args.dto';
 import { hash } from 'src/helpers/hash-password';
 
 @Injectable()

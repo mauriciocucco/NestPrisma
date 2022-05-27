@@ -7,20 +7,23 @@ import {
   Param,
   Delete,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import {
+  ApiBearerAuth,
   ApiCreatedResponse,
   ApiExtraModels,
   ApiOkResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { FilteredUser, UserEntity } from './entities/user.entity';
+import { FilteredUser } from './entities/user.entity';
 import { ConnectionArgsDto } from '../../paginated/dto/connections-args.dto';
 import { ApiPageResponse } from 'src/paginated/decorators/api-page-response.decorator';
 import { PageDto } from 'src/paginated/dto/page.dto';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @Controller('users')
 @ApiTags('users')
@@ -29,7 +32,9 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  @ApiCreatedResponse({ type: UserEntity })
+  @UseGuards(JwtAuthGuard) // 🔐
+  @ApiBearerAuth()
+  @ApiCreatedResponse({ type: FilteredUser })
   create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
   }
@@ -41,7 +46,7 @@ export class UsersController {
   }
 
   @Get('paginatedByCursor')
-  @ApiPageResponse(UserEntity)
+  @ApiPageResponse(FilteredUser)
   findAllPaginatedByCursor(@Query() connectionArgs: ConnectionArgsDto) {
     return this.usersService.paginatedByCursor(connectionArgs);
   }
@@ -53,13 +58,17 @@ export class UsersController {
   }
 
   @Patch(':id')
-  @ApiCreatedResponse({ type: UserEntity })
+  @UseGuards(JwtAuthGuard) // 🔐
+  @ApiBearerAuth()
+  @ApiCreatedResponse({ type: FilteredUser })
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.update(+id, updateUserDto);
   }
 
   @Delete(':id')
-  @ApiOkResponse({ type: UserEntity })
+  @UseGuards(JwtAuthGuard) // 🔐
+  @ApiBearerAuth()
+  @ApiOkResponse({ type: FilteredUser })
   remove(@Param('id') id: string) {
     return this.usersService.remove(+id);
   }

@@ -6,14 +6,17 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserEntity } from './entities/user.entity';
 import { ConnectionArgsDto } from '../../paginated/dto/connections-args.dto';
+import { hash } from 'src/helpers/hash-password';
 
 @Injectable()
 export class UsersService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(createUserDto: CreateUserDto) {
+    const password = await hash(createUserDto.password);
+
     return new UserEntity(
-      await this.prisma.user.create({ data: createUserDto }),
+      await this.prisma.user.create({ data: { ...createUserDto, password } }),
     );
   }
 

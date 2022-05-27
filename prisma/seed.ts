@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import { hash } from 'src/helpers/hash-password';
 import { applications } from './seeds/applications';
 import { companies } from './seeds/companies';
 import { users } from './seeds/users';
@@ -7,6 +8,8 @@ const prisma = new PrismaClient();
 
 const main = async () => {
   for (const user of users) {
+    await hash(user.password);
+
     await prisma.user.create({
       data: user,
     });

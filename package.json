@@ -20,9 +20,12 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "prisma": "nest add nestjs-prisma",
-    "migrate": "npx prisma migrate dev",
-    "seed": "npx prisma db seed",
-    "prisma studio": "npx prisma studio"
+    "migrate:dev": "npx prisma migrate dev",
+    "migrate:dev:create": "npx prisma migrate dev --create-only",
+    "migrate:deploy": "npx prisma migrate deploy",
+    "prisma:generate": "npx prisma generate",
+    "prisma:studio": "npx prisma studio",
+    "prisma:seed": "npx prisma db seed"
   },
   "dependencies": {
     "@devoxa/prisma-relay-cursor-connection": "^2.2.1",
@@ -38,6 +41,7 @@
     "bcrypt": "^5.0.1",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
+    "nestjs-prisma": "^0.15.1",
     "passport": "^0.5.3",
     "passport-jwt": "^4.0.0",
     "reflect-metadata": "^0.1.13",

@@ -36,6 +36,6 @@ async function bootstrap() {
     customSiteTitle: 'REST Server Doc',
   });
 
-  await app.listen(3000);
+  await app.listen(process.env.PORT);
 }
 bootstrap();
